@@ -122,17 +122,14 @@ module MailRoom
 
       @running = true
 
-      # prefetch messages before first idle
-      process_mailbox
-
       self.idling_thread = Thread.start do
         while(running?) do
           begin
+            # try to find new messages before going idling
+            process_mailbox
+
             # block for idle_timeout until we stop idling
             idle
-
-            # when new messages are ready
-            process_mailbox
           rescue Net::IMAP::Error, IOError => e
             # we've been disconnected, so re-setup
             setup

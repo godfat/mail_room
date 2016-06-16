@@ -232,7 +232,7 @@ describe MailRoom::MailboxWatcher do
 
       watcher.run
 
-      expect(watcher.handler).to have_received(:process).times(2)
+      expect(watcher.handler).to have_received(:process).once
     end
   end
 
